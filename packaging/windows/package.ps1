@@ -81,6 +81,9 @@ if (-not $SkipBuild) {
 
 $Bin = Join-Path $TargetDir "$Target\release"
 
+& (Join-Path $PSScriptRoot 'check-central-build.ps1') -App 'pdfcraft' -Root $Root -Bin $Bin
+
+
 # Check both binaries' PE headers before packaging. Machine (COFF header) must match -Arch, so an
 # x64 build can never ship labelled arm64 (#61). Subsystem (optional header): 2 = Windows GUI,
 # 3 = console. The app must be GUI (no console window opens with it, #57); the CLI must stay

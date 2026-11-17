@@ -14,7 +14,9 @@ fn centrally_managed_updates_never_contact_a_source_or_show_a_popup() {
         let mut h = Harness::builder().with_size(egui::vec2(1200.0, 800.0)).build_eframe(move |_cc| {
             let mut app = PdfCraftApp::new();
             app.set_option("language", "en").unwrap();
-            app.restore(r#"{"check_updates_at_start":true}"#);
+            app.restore(r#"{"check_updates_at_start":true,"update_check_at_start":true}"#);
+            app.set_option("update_check_at_start", "true").unwrap();
+            assert!(!app.update_check_at_start);
             app.set_update_source(Arc::new(move || {
                 counted.fetch_add(1, Ordering::SeqCst);
                 answer
